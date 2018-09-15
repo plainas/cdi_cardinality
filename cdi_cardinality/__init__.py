@@ -2,7 +2,7 @@ import argparse
 import csv
 import itertools
 
-parser = argparse.ArgumentParser(description="Performs a css selection on an HTML document.", prog= "tq")
+parser = argparse.ArgumentParser(description="outputs the cardinality of all columns on a CSV file", prog= "cdi_cardinality")
 parser.add_argument("filename")
 # parser.add_argument("-s", "--separator", help="Specify the separator charcter.")
 # parser.add_argument("-q", "--quote", help="Specify quote character.")
@@ -12,7 +12,6 @@ parser.add_argument("-v", "--valign", action='store_true',  help="Vertically ali
 
 
 args = parser.parse_args()
-
 
 def get_col_names(csv_iterator, no_header):
     if no_header:
@@ -45,11 +44,11 @@ def output(col_names, counters, valign):
 
 def main():
 
-    max = 1000
+    max = 0
     if args.max is not None:
         max = args.max
 
-    with open(args.filename, 'rb') as csvfile:
+    with open(args.filename, 'rt') as csvfile:
         csv_iter = csv.reader(csvfile)
         col_names, csv_iterator = get_col_names(csv_iter, args.no_header)
         num_cols = len(col_names)
@@ -61,12 +60,14 @@ def main():
 
         for row in csv_iterator:
 
-            #TODO: check if all counters are met and stop.
-            # this can be done every 10th row or so for perforamnce reasons
-            # it doesn't matter if we go a few iterations further as we don't increment maxed counters anyway
+            if max != 0:
+                non_maxed_counters = [x for x in counters if x < max]
+                if len(non_maxed_counters) == 0:
+                    output(col_names, counters, args.valign)
+                    exit()
 
             for idx, value in enumerate(row):
-                if counters[idx] >= max or max == 0:
+                if max !=0 and counters[idx] >= max:
                     continue
                 if value not in found_vals[idx]:
                     found_vals[idx][value] = 1
