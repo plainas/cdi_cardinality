@@ -1,6 +1,6 @@
 # cdi_cardinality
 
-cdi_cardinality prints the cardinality of each column of a csv file.
+Prints the cardinality of each column of a csv file.
 
 ## Installation
 
@@ -8,7 +8,7 @@ cdi_cardinality prints the cardinality of each column of a csv file.
 sudo pip3 isntall https://github.com/plainas/cdi_cardinality/zipball/master
 ```
 
-This package is not listed in python package index (pypy)
+This package is not listed in python package index (pypy). I do **not** intend to submit it. This code is shared as is. If you would like to have this available on pypi or if you would like a certain feature, you are encouraged to fork this project.
 
 ## usage
 
@@ -32,7 +32,7 @@ Tow_Facility_Phone 7
 Inventory_Number 4816
 ```
 
-Column names are will have spaces replaced by underscores for easier integration with other command line tools such as awk, sed, grep, etc.
+Column names will have spaces replaced by underscores for easier integration with other command line tools such as awk, sed, grep, etc.
 
 For readability by humans, the `-v` or `--valign` switch can be helpful.
 
@@ -50,7 +50,7 @@ Tow_Facility_Phone 7
 Inventory_Number   4816
 ```
 
-Mmemory usage is a linear function of column cardinality. If you are working with large files you can mitigate this problem by setting an upper limit for cardinality which will prevent filling up the memory with new values once the given limit is reached for each colum.
+Memory usage is a linear function of column cardinality. If you are working with very large files you can mitigate this problem by setting an upper limit for cardinality which will prevent filling up the memory with new values once the given limit is reached for each colum.
 
 This is achieved by passing a `-m` or `--max` parameter. 
 
